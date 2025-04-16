@@ -20,7 +20,6 @@ public class Employee {
 	private int yearJoined;
 	private int monthJoined;
 	private int dayJoined;
-	private int monthWorkingInYear;
 	
 	private boolean isForeigner;
 	private boolean gender; //true = Laki-laki, false = Perempuan
@@ -52,10 +51,6 @@ public class Employee {
 		childIdNumbers = new LinkedList<>();
 	}
 
-	/**
-	 * Fungsi untuk menentukan gaji bulanan pegawai berdasarkan grade kepegawaiannya.
-	 * Jika pegawai adalah warga negara asing, gaji bulanan diperbesar sebanyak 50%.
-	 */
 	public void setMonthlySalary(int grade) {
 		switch (grade) {
 			case 1:
@@ -95,19 +90,19 @@ public class Employee {
 	}
 
 	public int getAnnualIncomeTax() {
-		// Menghitung berapa lama pegawai bekerja dalam setahun
 		LocalDate date = LocalDate.now();
 
+		int monthWorked;
 		if (date.getYear() == yearJoined) {
-			monthWorkingInYear = date.getMonthValue() - monthJoined;
+			monthWorked = date.getMonthValue() - monthJoined;
 		} else {
-			monthWorkingInYear = 12;
+			monthWorked = 12;
 		}
 
 		TaxData data = new TaxData(
 			monthlySalary,
 			otherMonthlyIncome,
-			monthWorkingInYear,
+			monthWorked,
 			annualDeductible,
 			spouseIdNumber == null || spouseIdNumber.isEmpty(),
 			childIdNumbers.size()
